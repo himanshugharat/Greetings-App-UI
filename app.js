@@ -8,7 +8,7 @@
  */
 
 /**
- * @description: load the data from the api to our front end
+ * @description: load the data from the api to our frontend
  */
 const buttonAll = document.querySelector(".openAllButton");
 const card = document.querySelector(".card");
@@ -66,7 +66,7 @@ buttonAll.addEventListener("click", function () {
 document.getElementById("addpost").addEventListener("submit", addpost);
 
 /**
- * @description: Post the data to the api from our front end
+ * @description: Post the data to the api from our frontend
  */
 function addpost(post) {
   post.preventDefault();
@@ -90,7 +90,7 @@ function addpost(post) {
 }
 
 /**
- * @description: delete the data from the api by using our front end
+ * @description: delete the data from the api by using our frontend
  */
 const cardid = document.querySelector(".card");
 function deleteGreeting(element) {
@@ -106,7 +106,7 @@ function deleteGreeting(element) {
 }
 
 /**
- * @description: edit the data from the api by using our front end
+ * @description: edit the data from the api by using our frontend
  */
 function editGreetings() {
   const cardid = document.querySelector(".card");
