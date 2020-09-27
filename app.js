@@ -1,3 +1,15 @@
+/**
+ *Purpose  : To carry out the fetch operations from api
+ *@files   : app.js
+ *@overview: API get,put,post,delete opreations
+ *@author  : Himanshu Gharat
+ *@verson  : 1.0
+ *@since   : 22-09-2020
+ */
+
+ /**
+  * @description: load the data from the api to our front end
+  */
 const buttonAll = document.querySelector(".openAllButton");
 const card = document.querySelector(".card");
 function loadGreetings() {
@@ -32,7 +44,6 @@ function closeEditForm() {
   document.getElementById("popupsForm").style.display = "none";
 }
 
-
 function openForm() {
   document.getElementById("popupForm").style.display = "block";
 }
@@ -44,7 +55,9 @@ buttonAll.addEventListener("click", function () {
   loadGreetings();
 });
 document.getElementById("addpost").addEventListener("submit", addpost);
-
+/**
+  * @description: Post the data to the api from our front end
+  */
 function addpost(post) {
   post.preventDefault();
 
@@ -65,6 +78,9 @@ function addpost(post) {
     .then((data) => console.log(data));
   alert("succesfully added");
 }
+/**
+  * @description: delete the data from the api by using our front end
+  */
 const cardid = document.querySelector(".card");
 function deleteGreeting(element) {
   var id = element.id;
@@ -77,13 +93,16 @@ function deleteGreeting(element) {
     .then((data) => console.log(data));
   alert("succesfully deleted");
 }
+/**
+  * @description: edit the data from the api by using our front end
+  */
 function editGreetings() {
   const cardid = document.querySelector(".card");
   let firstname = document.getElementById("firstNameedit").value;
   let lastname = document.getElementById("lastNameedit").value;
   let ids = document.getElementById("idCollect").innerHTML;
   let cardValue = cardid.childNodes[ids].id;
-  alert(ids+lastname+firstname);
+  alert(ids + lastname + firstname);
   let url = "http://localhost:3000/greeting/" + cardValue;
   fetch(url, {
     method: "PUT",
@@ -97,8 +116,8 @@ function editGreetings() {
     }),
   })
     .then((response) => response.json())
-    .then((data) => console.log(data)).catch(err=>console.log(err));
-    
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err));
+
   alert("succesfully edited");
 }
-
