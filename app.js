@@ -7,13 +7,14 @@
  *@since   : 22-09-2020
  */
 
- /**
-  * @description: load the data from the api to our front end
-  */
+/**
+ * @description: load the data from the api to our front end
+ */
 const buttonAll = document.querySelector(".openAllButton");
 const card = document.querySelector(".card");
 function loadGreetings() {
-  fetch("http://localhost:3000/greeting")
+  let url = "http://localhost:3000/greeting";
+  fetch(url)
     .then((response) => response.json())
     .then((data) => {
       var place = 0;
@@ -36,10 +37,15 @@ function loadGreetings() {
     });
 }
 
+/**
+ * 
+ * event listeners for open form close form and other listeners 
+ */
 function openFormToEdit(element) {
   document.getElementById("popupsForm").style.display = "block";
   document.getElementById("idCollect").innerHTML = element.id;
 }
+
 function closeEditForm() {
   document.getElementById("popupsForm").style.display = "none";
 }
@@ -47,23 +53,27 @@ function closeEditForm() {
 function openForm() {
   document.getElementById("popupForm").style.display = "block";
 }
+
 function closeForm() {
   document.getElementById("popupForm").style.display = "none";
 }
+
 buttonAll.addEventListener("click", function () {
   card.innerHTML = "";
   loadGreetings();
 });
+
 document.getElementById("addpost").addEventListener("submit", addpost);
+
 /**
-  * @description: Post the data to the api from our front end
-  */
+ * @description: Post the data to the api from our front end
+ */
 function addpost(post) {
   post.preventDefault();
-
   let firstname = document.getElementById("firstName").value;
   let lastname = document.getElementById("lastName").value;
-  fetch("http://localhost:3000/greeting", {
+  let url = "http://localhost:3000/greeting";
+  fetch(url, {
     method: "POST",
     headers: {
       Accept: "application/json, text/plain, */*",
@@ -78,9 +88,10 @@ function addpost(post) {
     .then((data) => console.log(data));
   alert("succesfully added");
 }
+
 /**
-  * @description: delete the data from the api by using our front end
-  */
+ * @description: delete the data from the api by using our front end
+ */
 const cardid = document.querySelector(".card");
 function deleteGreeting(element) {
   var id = element.id;
@@ -93,9 +104,10 @@ function deleteGreeting(element) {
     .then((data) => console.log(data));
   alert("succesfully deleted");
 }
+
 /**
-  * @description: edit the data from the api by using our front end
-  */
+ * @description: edit the data from the api by using our front end
+ */
 function editGreetings() {
   const cardid = document.querySelector(".card");
   let firstname = document.getElementById("firstNameedit").value;
@@ -118,6 +130,5 @@ function editGreetings() {
     .then((response) => response.json())
     .then((data) => console.log(data))
     .catch((err) => console.log(err));
-
   alert("succesfully edited");
 }
