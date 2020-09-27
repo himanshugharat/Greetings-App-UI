@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <title>The App</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <a class="name">Greetings App</a>
+            <nav>
+                <div>
+                    <span><img src="images/bell.png" class="navImage"></span>
+                    <span><img src="images/email.png" class="navImage"></span>
+                    <span><img src="images/cog.png" class="navImage">Support</span>
+                    <span><img src="images/hammer-wrench.png" class="navImage"> Tools</span>
+                    <span> Signup</span>
+                    <span><a><button>SignIn</button></a></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <div class="side-bar">
+        <div class="openBtn">
+            <a><img>
+                <button class="openAllButton"><strong>All</strong></button></a>
+        </div>
+        <div class="openBtn">
+            <a>
+                <button class="openButton" onclick="openForm()"><strong>Add</strong></button></a>
+        </div>
+        
+    </div>
+    <div class="greetPopup">
+        <div class="formPopup"  id="popupForm">
+            <form class="formContainer" id="addpost">
+                <h2>Please Enter Details </h2>
+                <label for="firstName">
+                    <strong>First Name</strong>
+                </label>
+                <input type="text" id="firstName" placeholder="Your first name" name="firstName" required>
+                <label for="lastName">
+                    <strong>Last Name</strong>
+                </label>
+                <input type="text" id="lastName" placeholder="Your last name" name="lastName" required>
+                <button type="submit" class="btn">submit</button>
+                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="greetsPopup">
+        <div class="formPopup"  id="popupsForm">
+            <form class="formContainer" id="editpost">
+                <h2>Please Enter Details </h2>
+                <p id="idCollect"></p>
+                <label for="firstName">
+                    <strong>First Name</strong>
+                </label>
+                <input type="text" id="firstNameedit" placeholder="Your first name" name="firstName" required>
+                <label for="lastName">
+                    <strong>Last Name</strong>
+                </label>
+                <input type="text" id="lastNameedit" placeholder="Your last name" name="lastName" required>
+                <button type="submit" class="btn"onclick="editGreetings()">submit</button>
+                <button type="button" class="btn cancel" onclick="closeEditForm()">Close</button>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        
+    </div>
+    <script src="app.js"></script>
+</body>
+
+
+</html>
