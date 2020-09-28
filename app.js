@@ -7,43 +7,46 @@
  *@since   : 22-09-2020
  */
 
-/**
- * @description: load the data from the api to our frontend
- */
-const buttonAll = document.querySelector(".openAllButton");
+url = "http://localhost:3000/greeting/";
+const buttonAllcard = document.querySelector(".openAllButton");
 const card = document.querySelector(".card");
+card.innerHTML = "";
+loadGreetings();
+
 function loadGreetings() {
-  let url = "http://localhost:3000/greeting";
   fetch(url)
     .then((response) => response.json())
     .then((data) => {
-      var place = 0;
+      let place = 0;
       data.forEach((element) => {
         const div = document.createElement("div");
         div.id = element.id;
         div.innerHTML = `<div class="card-container">
-        <p id="card-id">id:${element.id} <br>
-        <b>Hello ${element.firstName} ${element.lastName}
-        </b>(Greeting)<br>
-        <b>${element.firstName}
-        </b>(name)<br><br>
-        15 min ago<br>
-             <div><button id="${place}" class="card-button" onclick="deleteGreeting(this)"><strong>Delete</strong></button>
-            <button id="${place}" class="card-button" onclick="openFormToEdit(this)"><strong>Edit</strong></button>
-        </div></p></div>`;
+        <div id="card-id">id:${element.id} </div>
+        <div id="name"><b>Hello ${element.firstName}
+        </b>(Greeting)</div>
+        <div><b>${element.lastName}
+        </b>(name)</div>
+        <div><a class="time">15 min ago<a></div>
+            <div> <span><button id="${place}" class="card-button" onclick="deleteGreeting(this)"><img src="./images/trash-can.png"></button></span>
+          <span> <button id="${place}" class="card-button" onclick="openFormToEdit(this)"><img src="./images/square-edit-outline.png"></button>
+        </span></div></div>`;
         place += 1;
         card.appendChild(div);
       });
+    })
+    .catch((err) => {
+      return err;
     });
 }
 
-/**
- * 
- * event listeners for open form close form and other listeners 
- */
 function openFormToEdit(element) {
+  console.log(card.childNodes[element.id]);
   document.getElementById("popupsForm").style.display = "block";
-  document.getElementById("idCollect").innerHTML = element.id;
+  document
+    .getElementById("firstNameedit")
+    .setAttribute("value", card.childNodes[element.id]);
+  document.getElementById("idCollect").id = element.id;
 }
 
 function closeEditForm() {
@@ -58,21 +61,17 @@ function closeForm() {
   document.getElementById("popupForm").style.display = "none";
 }
 
-buttonAll.addEventListener("click", function () {
+buttonAllcard.addEventListener("click", function () {
   card.innerHTML = "";
   loadGreetings();
 });
 
 document.getElementById("addpost").addEventListener("submit", addpost);
 
-/**
- * @description: Post the data to the api from our frontend
- */
 function addpost(post) {
   post.preventDefault();
-  let firstname = document.getElementById("firstName").value;
-  let lastname = document.getElementById("lastName").value;
-  let url = "http://localhost:3000/greeting";
+  let firstName = document.getElementById("firstName").value;
+  let lastName = document.getElementById("lastName").value;
   fetch(url, {
     method: "POST",
     headers: {
@@ -80,43 +79,43 @@ function addpost(post) {
       "Content-type": "application/json",
     },
     body: JSON.stringify({
-      firstName: firstname,
-      lastName: lastname,
+      firstName: firstName,
+      lastName: lastName,
     }),
   })
     .then((response) => response.json())
-    .then((data) => console.log(data));
+    .catch((err) => {
+      return err;
+    });
   alert("succesfully added");
+  location.reload();
 }
 
-/**
- * @description: delete the data from the api by using our frontend
- */
 const cardid = document.querySelector(".card");
 function deleteGreeting(element) {
   var id = element.id;
   let cardValue = cardid.childNodes[id].id;
-  let url = "http://localhost:3000/greeting/" + cardValue;
-  fetch(url, {
+  let deleteURL = url + cardValue;
+  console.log(deleteURL);
+  fetch(deleteURL, {
     method: "DELETE",
   })
     .then((response) => response.json())
-    .then((data) => console.log(data));
+    .catch((err) => {
+      return err;
+    });
   alert("succesfully deleted");
+  location.reload();
 }
 
-/**
- * @description: edit the data from the api by using our frontend
- */
 function editGreetings() {
   const cardid = document.querySelector(".card");
   let firstname = document.getElementById("firstNameedit").value;
   let lastname = document.getElementById("lastNameedit").value;
-  let ids = document.getElementById("idCollect").innerHTML;
+  let ids = document.getElementById("idCollect").id;
   let cardValue = cardid.childNodes[ids].id;
-  alert(ids + lastname + firstname);
-  let url = "http://localhost:3000/greeting/" + cardValue;
-  fetch(url, {
+  let editURL = url + cardValue;
+  fetch(editURL, {
     method: "PUT",
     headers: {
       Accept: "application/json, text/plain, */*",
@@ -128,7 +127,9 @@ function editGreetings() {
     }),
   })
     .then((response) => response.json())
-    .then((data) => console.log(data))
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return err;
+    });
   alert("succesfully edited");
+  location.reload();
 }

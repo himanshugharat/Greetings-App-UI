@@ -27,7 +27,7 @@
                     <span><img src="images/email.png" class="navImage"></span>
                     <span><img src="images/cog.png" class="navImage">Support</span>
                     <span><img src="images/hammer-wrench.png" class="navImage"> Tools</span>
-                    <span> Signup</span>
+                    <span class="signup"> Signup</span>
                     <span><a><button>SignIn</button></a></span>
                 </div>
             </nav>
@@ -35,12 +35,10 @@
     </header>
     <div class="side-bar">
         <div class="openBtn">
-            <a><img>
-                <button class="openAllButton"><strong>All</strong></button></a>
+            <a><img><button class="openAllButton"><img src="./images/wallet-outline.png" class="sideBarImages"><strong>List</strong></button></a>
         </div>
         <div class="openBtn">
-            <a>
-                <button class="openButton" onclick="openForm()"><strong>Add</strong></button></a>
+            <a><button class="openButton" onclick="openForm()"><img src="./images/wallet-plus-outline.png" class="sideBarImages"><strong>Add</strong></button></a>
         </div>
 
     </div>
@@ -65,8 +63,8 @@
     <div class="greetsPopup">
         <div class="formPopup" id="popupsForm">
             <form class="formContainer" id="editpost">
-                <h2>Please Enter Details </h2>
-                <p id="idCollect"></p>
+                <h2>Edit Details </h2>
+                <p id="idCollect"><style>:disabled</style></p>
                 <label for="firstName">
                     <strong>First Name</strong>
                 </label>
@@ -76,7 +74,7 @@
                 </label>
                 <input type="text" id="lastNameedit" placeholder="Your last name" name="lastName" required>
                 <button type="submit" class="btn" onclick="editGreetings()">submit</button>
-                <button type="button" class="btn cancel" onclick="closeEditForm()">Close</button>
+                <button class="btn cancel" onclick="closeEditForm()">Close</button>
             </form>
         </div>
     </div>
