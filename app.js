@@ -10,7 +10,7 @@
 url = "http://localhost:3000/greeting/";
 const buttonAllcard = document.querySelector(".openAllButton");
 const card = document.querySelector(".card");
-card.innerHTML = "";
+card.innerHTML = "<h1>Basic pannel Layout</h1>";
 loadGreetings();
 
 function loadGreetings() {
@@ -22,8 +22,8 @@ function loadGreetings() {
         const div = document.createElement("div");
         div.id = element.id;
         div.innerHTML = `<div class="card-container">
-        <div id="card-id">id:${element.id} </div>
-        <div id="name"><b>Hello ${element.firstName}
+        <div>id:${element.id} </div>
+        <div><b>Hello ${element.firstName}
         </b>(Greeting)</div>
         <div><b>${element.lastName}
         </b>(name)</div>
@@ -40,13 +40,27 @@ function loadGreetings() {
     });
 }
 
+function loadGreetingById(element){
+  const cardid = document.querySelector(".card");
+  let ids = +element+1;
+  let IdUrl=url+ids
+  fetch(IdUrl)
+  .then((response) => response.json())
+  .then((data)=>{
+    document
+       .getElementById("firstNameEdit")
+       .setAttribute("value", data.msg.firstName);
+    document
+       .getElementById("lastNameEdit")
+       .setAttribute("value", data.msg.lastName);
+  })
+}
+
+
 function openFormToEdit(element) {
-  console.log(card.childNodes[element.id]);
   document.getElementById("popupsForm").style.display = "block";
-  document
-    .getElementById("firstNameedit")
-    .setAttribute("value", card.childNodes[element.id]);
-  document.getElementById("idCollect").id = element.id;
+  document.getElementById("idCollect").innerHTML = element.id;
+  loadGreetingById(element.id)
 }
 
 function closeEditForm() {
@@ -62,7 +76,7 @@ function closeForm() {
 }
 
 buttonAllcard.addEventListener("click", function () {
-  card.innerHTML = "";
+  card.innerHTML = "<h1>Basic pannel Layout</h1>";
   loadGreetings();
 });
 
@@ -93,8 +107,9 @@ function addpost(post) {
 
 const cardid = document.querySelector(".card");
 function deleteGreeting(element) {
-  var id = element.id;
-  let cardValue = cardid.childNodes[id].id;
+  var ids = +element.id+1;
+  console.log(ids)
+  let cardValue = cardid.childNodes[ids].id;
   let deleteURL = url + cardValue;
   console.log(deleteURL);
   fetch(deleteURL, {
@@ -110,10 +125,12 @@ function deleteGreeting(element) {
 
 function editGreetings() {
   const cardid = document.querySelector(".card");
-  let firstname = document.getElementById("firstNameedit").value;
-  let lastname = document.getElementById("lastNameedit").value;
-  let ids = document.getElementById("idCollect").id;
+  let firstname = document.getElementById("firstNameEdit").value;
+  let lastname = document.getElementById("lastNameEdit").value;
+  let ids = document.getElementById("idCollect").innerHTML;
+  ids=+ids+1
   let cardValue = cardid.childNodes[ids].id;
+  console.log(cardValue)
   let editURL = url + cardValue;
   fetch(editURL, {
     method: "PUT",
@@ -133,3 +150,8 @@ function editGreetings() {
   alert("succesfully edited");
   location.reload();
 }
+function valid(firstName,lastName){
+  
+  return /^[a-zA-Z]+$/.test(lastName);/^[a-zA-Z]+$/.test(firstName);
+}
+console.log(valid("himanshu","Gharat"))

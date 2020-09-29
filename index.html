@@ -20,25 +20,27 @@
 <body>
     <header>
         <div class="container">
-            <a class="name">Greetings App</a>
+            <span class="name">Greetings App</span>
             <nav>
                 <div>
-                    <span><img src="images/bell.png" class="navImage"></span>
-                    <span><img src="images/email.png" class="navImage"></span>
-                    <span><img src="images/cog.png" class="navImage">Support</span>
-                    <span><img src="images/hammer-wrench.png" class="navImage"> Tools</span>
+                    <span><img src="images/bell.png" class="nav-image"></span>
+                    <span><img src="images/email.png" class="nav-image"></span>
+                    <span><img src="images/cog.png" class="nav-image">Support</span>
+                    <span><img src="images/hammer-wrench.png" class="nav-image"> Tools</span>
                     <span class="signup"> Signup</span>
-                    <span><a><button>SignIn</button></a></span>
+                    <span><button>SignIn</button></span>
                 </div>
             </nav>
         </div>
     </header>
     <div class="side-bar">
         <div class="openBtn">
-            <a><img><button class="openAllButton"><img src="./images/wallet-outline.png" class="sideBarImages"><strong>List</strong></button></a>
+            <button class="openAllButton"><img src="./images/diamond-stone.png"
+                    class="side-bar-images">List</button>
         </div>
         <div class="openBtn">
-            <a><button class="openButton" onclick="openForm()"><img src="./images/wallet-plus-outline.png" class="sideBarImages"><strong>Add</strong></button></a>
+            <button class="openButton" onclick="openForm()"><img src="./images/playlist-plus.png"
+                    class="side-bar-images">Add</button>
         </div>
 
     </div>
@@ -47,32 +49,32 @@
             <form class="formContainer" id="addpost">
                 <h2>Please Enter Details </h2>
                 <label for="firstName">
-                    <strong>First Name</strong>
+                    First Name
                 </label>
                 <input type="text" id="firstName" placeholder="Your first name" name="firstName" required>
                 <label for="lastName">
-                    <strong>Last Name</strong>
+                    Last Name
                 </label>
                 <input type="text" id="lastName" placeholder="Your last name" name="lastName" required>
                 <button type="submit" class="btn">submit</button>
-                <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+                <button class="btn cancel" onclick="closeForm()">Close</button>
             </form>
         </div>
     </div>
-
+    <p id="idCollect"></p>
     <div class="greetsPopup">
         <div class="formPopup" id="popupsForm">
             <form class="formContainer" id="editpost">
                 <h2>Edit Details </h2>
-                <p id="idCollect"><style>:disabled</style></p>
+                
                 <label for="firstName">
-                    <strong>First Name</strong>
+                    First Name
                 </label>
-                <input type="text" id="firstNameedit" placeholder="Your first name" name="firstName" required>
+                <input type="text" id="firstNameEdit" placeholder="Your first name" name="firstName" required>
                 <label for="lastName">
-                    <strong>Last Name</strong>
+                    Last Name
                 </label>
-                <input type="text" id="lastNameedit" placeholder="Your last name" name="lastName" required>
+                <input type="text" id="lastNameEdit" placeholder="Your last name" name="lastName" required>
                 <button type="submit" class="btn" onclick="editGreetings()">submit</button>
                 <button class="btn cancel" onclick="closeEditForm()">Close</button>
             </form>
