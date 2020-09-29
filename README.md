@@ -10,4 +10,3 @@ Procedure to run project
 3.Carry out the edit operation  
 4.Carry out the add operation  
 5.Carry out the delete operation
-  

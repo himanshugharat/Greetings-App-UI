@@ -40,52 +40,25 @@ function loadGreetings() {
     });
 }
 
-function loadGreetingById(element){
+function loadGreetingById(element) {
   const cardid = document.querySelector(".card");
-  let ids = +element+1;
-  let IdUrl=url+ids
+  let ids = +element + 1;
+  let IdUrl = url + ids;
   fetch(IdUrl)
-  .then((response) => response.json())
-  .then((data)=>{
-    document
-       .getElementById("firstNameEdit")
-       .setAttribute("value", data.msg.firstName);
-    document
-       .getElementById("lastNameEdit")
-       .setAttribute("value", data.msg.lastName);
-  })
+    .then((response) => response.json())
+    .then((data) => {
+      document
+        .querySelector(".firstNameEdit")
+        .setAttribute("value", data.msg.firstName);
+      document
+        .querySelector(".lastNameEdit")
+        .setAttribute("value", data.msg.lastName);
+    });
 }
-
-
-function openFormToEdit(element) {
-  document.getElementById("popupsForm").style.display = "block";
-  document.getElementById("idCollect").innerHTML = element.id;
-  loadGreetingById(element.id)
-}
-
-function closeEditForm() {
-  document.getElementById("popupsForm").style.display = "none";
-}
-
-function openForm() {
-  document.getElementById("popupForm").style.display = "block";
-}
-
-function closeForm() {
-  document.getElementById("popupForm").style.display = "none";
-}
-
-buttonAllcard.addEventListener("click", function () {
-  card.innerHTML = "<h1>Basic pannel Layout</h1>";
-  loadGreetings();
-});
-
-document.getElementById("addpost").addEventListener("submit", addpost);
-
 function addpost(post) {
   post.preventDefault();
-  let firstName = document.getElementById("firstName").value;
-  let lastName = document.getElementById("lastName").value;
+  let firstName = document.querySelector(".firstName").value;
+  let lastName = document.querySelector(".lastName").value;
   fetch(url, {
     method: "POST",
     headers: {
@@ -107,8 +80,8 @@ function addpost(post) {
 
 const cardid = document.querySelector(".card");
 function deleteGreeting(element) {
-  var ids = +element.id+1;
-  console.log(ids)
+  var ids = +element.id + 1;
+  console.log(ids);
   let cardValue = cardid.childNodes[ids].id;
   let deleteURL = url + cardValue;
   console.log(deleteURL);
@@ -125,36 +98,59 @@ function deleteGreeting(element) {
 
 function editGreetings() {
   const cardid = document.querySelector(".card");
-  let firstname = document.getElementById("firstNameEdit").value;
-  let lastname = document.getElementById("lastNameEdit").value;
+  let firstname = document.querySelector(".firstNameEdit").value;
+  let lastname = document.querySelector(".lastNameEdit").value;
   let ids = document.getElementById("idCollect").innerHTML;
-  ids=+ids+1
-  if(!valid(firstname)||!valid(lastname)){
-    alert("numbers not allowed as names")
+  ids = +ids + 1;
+  if (!valid(firstname) || !valid(lastname)) {
+    alert("numbers not allowed as names");
+  } else {
+    let cardValue = cardid.childNodes[ids].id;
+    console.log(cardValue);
+    let editURL = url + cardValue;
+    fetch(editURL, {
+      method: "PUT",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName: firstname,
+        lastName: lastname,
+      }),
+    })
+      .then((response) => response.json())
+      .catch((err) => {
+        return err;
+      });
+    alert("succesfully edited");
+    location.reload();
   }
-  else{
-  let cardValue = cardid.childNodes[ids].id;
-  console.log(cardValue)
-  let editURL = url + cardValue;
-  fetch(editURL, {
-    method: "PUT",
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify({
-      firstName: firstname,
-      lastName: lastname,
-    }),
-  })
-    .then((response) => response.json())
-    .catch((err) => {
-      return err;
-    });
-  alert("succesfully edited");
-  location.reload();
-}}
-function valid(name){
+}
+function valid(name) {
   return /^[a-zA-Z]+$/.test(name);
 }
-console.log(valid("Gharat"))
+function openFormToEdit(element) {
+  document.getElementById("popupsForm").style.display = "block";
+  document.getElementById("idCollect").innerHTML = element.id;
+  loadGreetingById(element.id);
+}
+
+function closeEditForm() {
+  document.getElementById("popupsForm").style.display = "none";
+}
+
+function openForm() {
+  document.getElementById("popupForm").style.display = "block";
+}
+
+function closeForm() {
+  document.getElementById("popupForm").style.display = "none";
+}
+
+buttonAllcard.addEventListener("click", function () {
+  card.innerHTML = "<h1>Basic pannel Layout</h1>";
+  loadGreetings();
+});
+
+document.getElementById("addpost").addEventListener("submit", addpost);

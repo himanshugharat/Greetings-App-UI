@@ -142,7 +142,8 @@ nav div span button:hover {
   text-align: center;
   width: 100%;
 }
-.formPopup {
+.formPopup
+{
   display: none;
   position: fixed;
   left: 45%;
