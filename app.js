@@ -129,6 +129,10 @@ function editGreetings() {
   let lastname = document.getElementById("lastNameEdit").value;
   let ids = document.getElementById("idCollect").innerHTML;
   ids=+ids+1
+  if(!valid(firstname)||!valid(lastname)){
+    alert("numbers not allowed as names")
+  }
+  else{
   let cardValue = cardid.childNodes[ids].id;
   console.log(cardValue)
   let editURL = url + cardValue;
@@ -149,9 +153,8 @@ function editGreetings() {
     });
   alert("succesfully edited");
   location.reload();
+}}
+function valid(name){
+  return /^[a-zA-Z]+$/.test(name);
 }
-function valid(firstName,lastName){
-  
-  return /^[a-zA-Z]+$/.test(lastName);/^[a-zA-Z]+$/.test(firstName);
-}
-console.log(valid("himanshu","Gharat"))
+console.log(valid("Gharat"))
