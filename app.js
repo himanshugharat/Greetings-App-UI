@@ -13,6 +13,10 @@ const card = document.querySelector(".card");
 card.innerHTML = "<h1>Basic pannel Layout</h1>";
 loadGreetings();
 
+/**
+ * @description: loads the greeting data from api and add in div
+ * @returns: error if any
+ */
 function loadGreetings() {
   fetch(url)
     .then((response) => response.json())
@@ -40,6 +44,10 @@ function loadGreetings() {
     });
 }
 
+/**
+ * @description: load the greatings using the id of greeting
+ * @param {number} element
+ */
 function loadGreetingById(element) {
   let ids = +element + 1;
   let IdUrl = url + ids;
@@ -54,45 +62,56 @@ function loadGreetingById(element) {
         .setAttribute("value", data.msg.lastName);
     });
 }
+
+/**
+ * @description: add the new greetigs to the api
+ * @returns: error if any
+ * @param {object} post
+ */
 function addpost(post) {
   post.preventDefault();
   let firstName = document.querySelector(".firstName").value;
   let lastName = document.querySelector(".lastName").value;
-  let form=document.querySelector(".formPopup")
-  let error=document.querySelector(".errors")
+  let form = document.querySelector(".formPopup");
+  let error = document.querySelector(".errors");
   if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
-    form.addEventListener('submit',(e)=>{
-      e.preventDefault()
-      let message=[]
-      if(firstName.length<3){
-        message.push("name should be greater than 3 char")
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let message = [];
+      if (firstName.length < 3) {
+        message.push("name should be greater than 3 char");
       }
-      if(!validFormInputs(firstName) || !validFormInputs(lastName)){
-        message.push("name should not contain number")
+      if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
+        message.push("name should not contain number");
       }
-      if(message.length>0)
-      error.innerHTML=message.join(', ')
-    })
-  } else {
-  fetch(url, {
-    method: "POST",
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-type": "application/json",
-    },
-    body: JSON.stringify({
-      firstName: firstName,
-      lastName: lastName,
-    }),
-  })
-    .then((response) => response.json())
-    .catch((err) => {
-      return err;
+      if (message.length > 0) error.innerHTML = message.join(", ");
     });
-  alert("succesfully added");
-  location.reload();
-}}
+  } else {
+    fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        firstName: firstName,
+        lastName: lastName,
+      }),
+    })
+      .then((response) => response.json())
+      .catch((err) => {
+        return err;
+      });
+    alert("succesfully added");
+    location.reload();
+  }
+}
 
+/**
+ * @description: delete the card from api using the id of card
+ * @returns: error if any
+ * @param: {number} elements
+ */
 const cardid = document.querySelector(".card");
 function deleteGreeting(element) {
   var ids = +element.id + 1;
@@ -108,31 +127,32 @@ function deleteGreeting(element) {
   alert("succesfully deleted");
   location.reload();
 }
-
+/**
+ * @description: edit the existing greeting in the api using id
+ * @returns: error if any
+ */
 function editGreetings() {
   const cardId = document.querySelector(".card");
   let firstName = document.querySelector(".firstNameEdit").value;
   let lastName = document.querySelector(".lastNameEdit").value;
   let ids = document.getElementById("idCollect").innerHTML;
-  let form=document.querySelector(".formPopups")
-  let error=document.querySelector(".error")
+  let form = document.querySelector(".formPopups");
+  let error = document.querySelector(".error");
   ids = +ids + 1;
   if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
-    form.addEventListener('submit',(e)=>{
-      e.preventDefault()
-      let message=[]
-      if(firstName.length<3){
-        message.push("name should be greater than 3 char")
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let message = [];
+      if (firstName.length < 3) {
+        message.push("name should be greater than 3 char");
       }
-      if(!validFormInputs(firstName) || !validFormInputs(lastName)){
-        message.push("name should not contain number")
+      if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
+        message.push("name should not contain number");
       }
-      if(message.length>0)
-      error.innerHTML=message.join(', ')
-    })
+      if (message.length > 0) error.innerHTML = message.join(", ");
+    });
   } else {
     let cardValue = cardId.childNodes[ids].id;
-    console.log(cardValue);
     let editURL = url + cardValue;
     fetch(editURL, {
       method: "PUT",
@@ -149,41 +169,53 @@ function editGreetings() {
       .catch((err) => {
         return err;
       });
-      form.addEventListener('submit',(e)=>{
-      //form.closeEditForm()
-      //alert("succesfully edited");
-      form.closeEditForm()
-      //location.reload();
-  })
- // alert("succesfully edited");
+    closeEditForm();
+    //alert("succesfully edited");
+  }
 }
-alert("succesfully edited");
-}
+
+/**
+ * @description: validate the name from form
+ * @returns: true or false
+ * @param:{string}name
+ */
 function validFormInputs(name) {
   return /^[a-zA-Z]{3,}$/.test(name);
 }
+
+/**
+ * @description: use to display the edit form
+ * @param:{object}element
+ */
 function openFormToEdit(element) {
   document.querySelector(".formPopups").style.display = "block";
   document.getElementById("idCollect").innerHTML = element.id;
   loadGreetingById(element.id);
 }
 
+//use to hide the edit form
 function closeEditForm() {
   document.querySelector(".formPopups").style.display = "none";
-  
+  setTimeout(() => {
+    alert("succesfully edited");
+  }, 3000);
 }
 
+//use to display the add form
 function openForm() {
   document.querySelector(".formPopup").style.display = "block";
 }
 
+//use to hide the add form
 function closeForm() {
   document.querySelector(".formPopup").style.display = "none";
 }
 
+//use to load the data on submit
 buttonAllcard.addEventListener("click", function () {
   card.innerHTML = "<h1>Basic pannel Layout</h1>";
   loadGreetings();
 });
 
+//use to add the data on submit
 document.getElementById("addpost").addEventListener("submit", addpost);
