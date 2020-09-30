@@ -27,7 +27,7 @@ function loadGreetings() {
         </b>(Greeting)</div>
         <div><b>${element.lastName}
         </b>(name)</div>
-        <div><a class="time">15 min ago<a></div>
+        <div class="time">15 min ago</div>
             <div> <span><button id="${place}" class="card-button" onclick="deleteGreeting(this)"><img src="./images/trash-can.png"></button></span>
           <span> <button id="${place}" class="card-button" onclick="openFormToEdit(this)"><img src="./images/square-edit-outline.png"></button>
         </span></div></div>`;
@@ -41,7 +41,6 @@ function loadGreetings() {
 }
 
 function loadGreetingById(element) {
-  const cardid = document.querySelector(".card");
   let ids = +element + 1;
   let IdUrl = url + ids;
   fetch(IdUrl)
@@ -59,6 +58,22 @@ function addpost(post) {
   post.preventDefault();
   let firstName = document.querySelector(".firstName").value;
   let lastName = document.querySelector(".lastName").value;
+  let form=document.querySelector(".formPopup")
+  let error=document.querySelector(".errors")
+  if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
+    form.addEventListener('submit',(e)=>{
+      e.preventDefault()
+      let message=[]
+      if(firstName.length<3){
+        message.push("name should be greater than 3 char")
+      }
+      if(!validFormInputs(firstName) || !validFormInputs(lastName)){
+        message.push("name should not contain number")
+      }
+      if(message.length>0)
+      error.innerHTML=message.join(', ')
+    })
+  } else {
   fetch(url, {
     method: "POST",
     headers: {
@@ -76,15 +91,13 @@ function addpost(post) {
     });
   alert("succesfully added");
   location.reload();
-}
+}}
 
 const cardid = document.querySelector(".card");
 function deleteGreeting(element) {
   var ids = +element.id + 1;
-  console.log(ids);
   let cardValue = cardid.childNodes[ids].id;
   let deleteURL = url + cardValue;
-  console.log(deleteURL);
   fetch(deleteURL, {
     method: "DELETE",
   })
@@ -97,15 +110,28 @@ function deleteGreeting(element) {
 }
 
 function editGreetings() {
-  const cardid = document.querySelector(".card");
-  let firstname = document.querySelector(".firstNameEdit").value;
-  let lastname = document.querySelector(".lastNameEdit").value;
+  const cardId = document.querySelector(".card");
+  let firstName = document.querySelector(".firstNameEdit").value;
+  let lastName = document.querySelector(".lastNameEdit").value;
   let ids = document.getElementById("idCollect").innerHTML;
+  let form=document.querySelector(".formPopups")
+  let error=document.querySelector(".error")
   ids = +ids + 1;
-  if (!valid(firstname) || !valid(lastname)) {
-    alert("numbers not allowed as names");
+  if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
+    form.addEventListener('submit',(e)=>{
+      e.preventDefault()
+      let message=[]
+      if(firstName.length<3){
+        message.push("name should be greater than 3 char")
+      }
+      if(!validFormInputs(firstName) || !validFormInputs(lastName)){
+        message.push("name should not contain number")
+      }
+      if(message.length>0)
+      error.innerHTML=message.join(', ')
+    })
   } else {
-    let cardValue = cardid.childNodes[ids].id;
+    let cardValue = cardId.childNodes[ids].id;
     console.log(cardValue);
     let editURL = url + cardValue;
     fetch(editURL, {
@@ -115,37 +141,44 @@ function editGreetings() {
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        firstName: firstname,
-        lastName: lastname,
+        firstName: firstName,
+        lastName: lastName,
       }),
     })
       .then((response) => response.json())
       .catch((err) => {
         return err;
       });
-    alert("succesfully edited");
-    location.reload();
-  }
+      form.addEventListener('submit',(e)=>{
+      //form.closeEditForm()
+      //alert("succesfully edited");
+      form.closeEditForm()
+      //location.reload();
+  })
+ // alert("succesfully edited");
 }
-function valid(name) {
-  return /^[a-zA-Z]+$/.test(name);
+alert("succesfully edited");
+}
+function validFormInputs(name) {
+  return /^[a-zA-Z]{3,}$/.test(name);
 }
 function openFormToEdit(element) {
-  document.getElementById("popupsForm").style.display = "block";
+  document.querySelector(".formPopups").style.display = "block";
   document.getElementById("idCollect").innerHTML = element.id;
   loadGreetingById(element.id);
 }
 
 function closeEditForm() {
-  document.getElementById("popupsForm").style.display = "none";
+  document.querySelector(".formPopups").style.display = "none";
+  
 }
 
 function openForm() {
-  document.getElementById("popupForm").style.display = "block";
+  document.querySelector(".formPopup").style.display = "block";
 }
 
 function closeForm() {
-  document.getElementById("popupForm").style.display = "none";
+  document.querySelector(".formPopup").style.display = "none";
 }
 
 buttonAllcard.addEventListener("click", function () {

@@ -42,12 +42,21 @@
             <button class="openButton" onclick="openForm()"><img src="./images/playlist-plus.png"
                     class="side-bar-images">Add</button>
         </div>
+        <div class="openBtn">
+            <button class="openButton"><img src="./images/trash-can.png"
+                    class="side-bar-images">Edit</button>
+        </div>
+        <div class="openBtn">
+            <button class="openButton"><img src="/images/square-edit-outline.png"
+                    class="side-bar-images">Delete</button>
+        </div>
 
     </div>
     <div class="greetPopup">
-        <div class="formPopup" id="popupForm">
-            <form class="formContainer" id="addpost">
+        <div class="formPopup">
+            <form class="formContainers" id="addpost">
                 <h2>Please Enter Details </h2>
+                <div class="errors"></div>
                 <label for="firstName">
                     First Name
                 </label>
@@ -63,9 +72,10 @@
     </div>
     <p id="idCollect"></p>
     <div class="greetsPopup">
-        <div class="formPopup" id="popupsForm">
+        <div class="formPopups">
             <form class="formContainer" id="editpost">
                 <h2>Edit Details </h2>
+                <div class="error"></div>
                 <label for="firstName">
                     First Name
                 </label>
