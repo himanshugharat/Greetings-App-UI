@@ -77,6 +77,8 @@ function addpost(post) {
   let lastNameError = document.querySelector(".lastNameError");
   if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
     form.addEventListener("submit", (e) => {
+      firstNameError.innerHTML = " ";
+      lastNameError.innerHTML = " ";
       e.preventDefault();
       let firstNameMessage = [];
       let lastNameMessage = [];
@@ -92,8 +94,10 @@ function addpost(post) {
       if (!validFormInputs(lastName)) {
         lastNameMessage.push("last name should not contain number");
       }
-      if (firstNameMessage.length > 0) firstNameError.innerHTML = firstNameMessage.join(", ");
-      if (lastNameMessage.length > 0) lastNameError.innerHTML = lastNameMessage.join(", ");
+      if (firstNameMessage.length > 0)
+        firstNameError.innerHTML = firstNameMessage.join(", ");
+      if (lastNameMessage.length > 0)
+        lastNameError.innerHTML = lastNameMessage.join(", ");
     });
   } else {
     fetch(url, {
@@ -107,13 +111,15 @@ function addpost(post) {
         lastName: lastName,
       }),
     })
-      .then((response) => {response.json(); alert("successful added")})
-    .//  .then(()=>{alert("successful added")})
+      .then((response) => {
+        response.json();
+        alert("successfully added");
+      })
       .catch((err) => {
         return err;
-      })
-  closeForm();
-    location.reload();
+      });
+   closeForm();
+   location.reload();
   }
 }
 
@@ -130,11 +136,15 @@ function deleteGreeting(element) {
   fetch(deleteURL, {
     method: "DELETE",
   })
-    .then((response) => response.json())
+    .then((response) => {
+      response.json();
+      if (response.ok) {
+        alert("succesfully deleted");
+      }
+    })
     .catch((err) => {
       return err;
     });
-  alert("succesfully deleted");
   location.reload();
 }
 /**
@@ -152,8 +162,8 @@ function editGreetings() {
   ids = +ids + 1;
   if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
     form.addEventListener("submit", (e) => {
-      firstNameError.innerHTML=" "
-      lastNameError.innerHTML=" "
+      firstNameError.innerHTML = " ";
+      lastNameError.innerHTML = " ";
       e.preventDefault();
       let firstNameMessage = [];
       let lastNameMessage = [];
@@ -169,8 +179,10 @@ function editGreetings() {
       if (!validFormInputs(lastName)) {
         lastNameMessage.push("last name should not contain number");
       }
-      if (firstNameMessage.length > 0) firstNameError.innerHTML = firstNameMessage.join(", ");
-      if (lastNameMessage.length > 0) lastNameError.innerHTML = lastNameMessage.join(", ");
+      if (firstNameMessage.length > 0)
+        firstNameError.innerHTML = firstNameMessage.join(", ");
+      if (lastNameMessage.length > 0)
+        lastNameError.innerHTML = lastNameMessage.join(", ");
     });
   } else {
     let cardValue = cardId.childNodes[ids].id;
@@ -186,15 +198,17 @@ function editGreetings() {
         lastName: lastName,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        response.json();
+        if (response.ok) {
+          alert("successfully edited");
+        }
+      })
       .catch((err) => {
         return err;
-      }).then((responseJon)=>{
-        alert("successful updated")
       });
     closeEditForm();
     location.reload();
-    //alert("succesfully edited");
   }
 }
 
@@ -220,9 +234,6 @@ function openFormToEdit(element) {
 //use to hide the edit form
 function closeEditForm() {
   document.querySelector(".formPopups").style.display = "none";
-  //  setTimeout(() => {
-  //   alert("succesfully edited");
-  //  }, 1000);
 }
 
 //use to display the add form
@@ -243,8 +254,4 @@ buttonAllcard.addEventListener("click", function () {
 
 //use to add the data on submit
 document.getElementById("addpost").addEventListener("submit", addpost);
-//window.open("addpost").addEventListener("submit", addpost);
 
-// $(#addpost).click(function(){
-
-// })
