@@ -73,18 +73,27 @@ function addpost(post) {
   let firstName = document.querySelector(".firstName").value;
   let lastName = document.querySelector(".lastName").value;
   let form = document.querySelector(".formPopup");
-  let error = document.querySelector(".errors");
+  let firstNameError = document.querySelector(".firstNameError");
+  let lastNameError = document.querySelector(".lastNameError");
   if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
-      let message = [];
+      let firstNameMessage = [];
+      let lastNameMessage = [];
       if (firstName.length < 3) {
-        message.push("name should be greater than 3 char");
+        firstNameMessage.push("first name should be greater than 3 char");
       }
-      if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
-        message.push("name should not contain number");
+      if (!validFormInputs(firstName)) {
+        firstNameMessage.push("first name should not contain number");
       }
-      if (message.length > 0) error.innerHTML = message.join(", ");
+      if (lastName.length < 3) {
+        lastNameMessage.push("last name should be greater than 3 char");
+      }
+      if (!validFormInputs(lastName)) {
+        lastNameMessage.push("last name should not contain number");
+      }
+      if (firstNameMessage.length > 0) firstNameError.innerHTML = firstNameMessage.join(", ");
+      if (lastNameMessage.length > 0) lastNameError.innerHTML = lastNameMessage.join(", ");
     });
   } else {
     fetch(url, {
@@ -98,11 +107,12 @@ function addpost(post) {
         lastName: lastName,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {response.json(); alert("successful added")})
+    .//  .then(()=>{alert("successful added")})
       .catch((err) => {
         return err;
-      });
-    alert("succesfully added");
+      })
+  closeForm();
     location.reload();
   }
 }
@@ -137,19 +147,30 @@ function editGreetings() {
   let lastName = document.querySelector(".lastNameEdit").value;
   let ids = document.getElementById("idCollect").innerHTML;
   let form = document.querySelector(".formPopups");
-  let error = document.querySelector(".error");
+  let firstNameError = document.querySelector(".firstNameEror");
+  let lastNameError = document.querySelector(".lastNameEror");
   ids = +ids + 1;
   if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
     form.addEventListener("submit", (e) => {
+      firstNameError.innerHTML=" "
+      lastNameError.innerHTML=" "
       e.preventDefault();
-      let message = [];
+      let firstNameMessage = [];
+      let lastNameMessage = [];
       if (firstName.length < 3) {
-        message.push("name should be greater than 3 char");
+        firstNameMessage.push("first name should be greater than 3 char");
       }
-      if (!validFormInputs(firstName) || !validFormInputs(lastName)) {
-        message.push("name should not contain number");
+      if (!validFormInputs(firstName)) {
+        firstNameMessage.push("first name should not contain number");
       }
-      if (message.length > 0) error.innerHTML = message.join(", ");
+      if (lastName.length < 3) {
+        lastNameMessage.push("last name should be greater than 3 char");
+      }
+      if (!validFormInputs(lastName)) {
+        lastNameMessage.push("last name should not contain number");
+      }
+      if (firstNameMessage.length > 0) firstNameError.innerHTML = firstNameMessage.join(", ");
+      if (lastNameMessage.length > 0) lastNameError.innerHTML = lastNameMessage.join(", ");
     });
   } else {
     let cardValue = cardId.childNodes[ids].id;
@@ -168,8 +189,11 @@ function editGreetings() {
       .then((response) => response.json())
       .catch((err) => {
         return err;
+      }).then((responseJon)=>{
+        alert("successful updated")
       });
     closeEditForm();
+    location.reload();
     //alert("succesfully edited");
   }
 }
@@ -196,9 +220,9 @@ function openFormToEdit(element) {
 //use to hide the edit form
 function closeEditForm() {
   document.querySelector(".formPopups").style.display = "none";
-  setTimeout(() => {
-    alert("succesfully edited");
-  }, 3000);
+  //  setTimeout(() => {
+  //   alert("succesfully edited");
+  //  }, 1000);
 }
 
 //use to display the add form
@@ -219,3 +243,8 @@ buttonAllcard.addEventListener("click", function () {
 
 //use to add the data on submit
 document.getElementById("addpost").addEventListener("submit", addpost);
+//window.open("addpost").addEventListener("submit", addpost);
+
+// $(#addpost).click(function(){
+
+// })

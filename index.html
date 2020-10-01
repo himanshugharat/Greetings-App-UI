@@ -54,17 +54,18 @@
     </div>
     <div class="greetPopup">
         <div class="formPopup">
-            <form class="formContainers" id="addpost">
+            <form class="formContainer" id="addpost" autocomplete="off">
                 <h2>Please Enter Details </h2>
-                <div class="errors"></div>
                 <label for="firstName">
                     First Name
                 </label>
                 <input type="text" class="firstName" placeholder="Your first name" name="firstName" required>
+                <div class="firstNameError"></div>
                 <label for="lastName">
                     Last Name
                 </label>
                 <input type="text" class="lastName" placeholder="Your last name" name="lastName" required>
+                <div class="lastNameError"></div>
                 <button type="submit" class="btn">submit</button>
                 <button class="btn cancel" onclick="closeForm()">Close</button>
             </form>
@@ -73,17 +74,18 @@
     <p id="idCollect"></p>
     <div class="greetsPopup">
         <div class="formPopups">
-            <form class="formContainer" id="editpost">
+            <form class="formContainer" id="editpost" autocomplete="off">
                 <h2>Edit Details </h2>
-                <div class="error"></div>
                 <label for="firstName">
                     First Name
                 </label>
                 <input type="text" class="firstNameEdit" placeholder="Your first name" name="firstName" required>
+                <div class="firstNameEror"></div>
                 <label for="lastName">
                     Last Name
                 </label>
                 <input type="text" class="lastNameEdit" placeholder="Your last name" name="lastName" required>
+                <div class="lastNameEror"></div>
                 <button type="submit" class="btn" onclick="editGreetings()">submit</button>
                 <button class="btn cancel" onclick="closeEditForm()">Close</button>
             </form>

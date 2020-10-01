@@ -200,7 +200,8 @@ nav div span button:hover {
   width: 20px;
   float: left;
 }
-.error,.errors{
+.firstNameError,.lastNameError,
+.firstNameEror,.lastNameEror{
   color: red;
   font-size: 13px;
 }
